@@ -163,11 +163,11 @@
           <h6> Penandatangan Daftar Hadir Rapat</h6>
         </div>
         <div class="form-check form-check-solid">
-          <input class="form-check-input" id="isKepalaYes" type="radio" name="isMitra" checked>
+          <input class="form-check-input" id="isKepalaYes" type="radio" name="isKepala" checked>
           <label class="form-check-label" for="isKepalaYes">Kepala BPS Kab. Batang</label>
         </div>
         <div class="form-check form-check-solid">
-          <input class="form-check-input" id="isKepalaNo" type="radio" name="isMitra">
+          <input class="form-check-input" id="isKepalaNo" type="radio" name="isKepala">
           <label class="form-check-label" for="isKepalaNo">Lainnya</label>
         </div>
 

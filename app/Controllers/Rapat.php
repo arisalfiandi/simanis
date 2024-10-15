@@ -61,6 +61,7 @@ class Rapat extends BaseController
       'waktu_mulai' => 'required',
       'isBiaya' => 'required',
       'isMitra' => 'required',
+      'isKepala' => 'required',
       'peserta' => 'required',
       'notula_id' => 'required',
       'dokum_id' => 'required',
@@ -74,6 +75,7 @@ class Rapat extends BaseController
       session()->setFlashdata('informasi', "<script>swal('GAGAL!','$error','error')</script>");
       return redirect()->to('/buat-undangan-rapat');
     } else {
+      $isKepala = $this->request->getPost('isKepala');
       $nama_rapat = $this->request->getPost('nama');
       $tempat = $this->request->getPost('tempat');
       $tembusan = $this->request->getPost('tembusan');
@@ -159,10 +161,18 @@ class Rapat extends BaseController
       // ttd
       $worksheet2->getCell('G15')->setValue($this->request->getPost('selaku'));
       // nama ttd
-      $username = $user_model->get_user_nama($this->request->getPost('ttd_lainnya'));
+      if($isKepala){
+        $username = $user_model->get_user_nama(2);
+      } else {
+        $username = $user_model->get_user_nama($this->request->getPost('ttd_lainnya'));
+      }
       $worksheet2->getCell('G18')->setValue($username[0]['username']);
       // nip ttd
-      $username = $user_model->get_user_nip($this->request->getPost('ttd_lainnya'));
+      if($isKepala){
+        $username = $user_model->get_user_nip(2);
+      } else {
+        $username = $user_model->get_user_nip($this->request->getPost('ttd_lainnya'));
+      }
       $worksheet2->getCell('G19')->setValue('NIP. : '.$username[0]['nip']);
       // tanggal surat
       $worksheet2->getCell('G14')->setValue('Batang, ' . $tanggal_now);
@@ -245,10 +255,18 @@ class Rapat extends BaseController
         // ttd
         $worksheet3->getCell('F16')->setValue($this->request->getPost('selaku'));
         // nama ttd
-        $username = $user_model->get_user_nama($this->request->getPost('ttd_lainnya'));
-        $worksheet3->getCell('F20')->setValue($username[0]['username']);
-        // nip ttd
-        $username = $user_model->get_user_nip($this->request->getPost('ttd_lainnya'));
+        if($isKepala){
+          $username = $user_model->get_user_nama(2);
+        } else {
+          $username = $user_model->get_user_nama($this->request->getPost('ttd_lainnya'));
+        }
+          $worksheet3->getCell('F20')->setValue($username[0]['username']);
+          // nip ttd
+        if($isKepala){
+          $username = $user_model->get_user_nip(2);
+        } else {
+          $username = $user_model->get_user_nip($this->request->getPost('ttd_lainnya'));
+        }
         $worksheet3->getCell('F21')->setValue('NIP. : '.$username[0]['nip']);
         // tanggal surat
         $worksheet3->getCell('F15')->setValue('Batang, ' . $tanggal_now);
