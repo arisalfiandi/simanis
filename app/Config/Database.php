@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
+        'hostname'     => 'mysql-333c83ca-arisalfiandi1234-8826.a.aivencloud.com',
+        'username'     => 'avnadmin',
+        'password'     => 'AVNS_xqWUe7QZHZxjiJN9hyF',
+        'database'     => 'simanis',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -41,8 +41,9 @@ class Database extends Config
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
-        'port'         => 3306,
+        'port'         => 17673,
         'numberNative' => false,
+        'options'  => [MYSQLI_CLIENT_SSL           => true]
     ];
 
     /**
