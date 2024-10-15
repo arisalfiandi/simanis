@@ -7,8 +7,5 @@ WORKDIR /var/www/html
 # Copy your application files
 COPY . .
 
-# Copy custom nginx configuration file
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
 # Expose the port
 EXPOSE 80
