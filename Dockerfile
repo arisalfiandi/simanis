@@ -2,19 +2,20 @@ FROM richarvey/nginx-php-fpm:1.9.0
 
 COPY . .
 
-# Image config
-ENV SKIP_COMPOSER 1
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
+# Set working directory
+WORKDIR /var/www/html
 
-# Laravel config
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV LOG_CHANNEL stderr
+# Install any PHP extensions needed
+RUN docker-php-ext-install pdo pdo_mysql
 
-# Allow composer to run as root
-ENV COMPOSER_ALLOW_SUPERUSER 1
+# Set the appropriate permissions for the Apache server
+RUN chown -R www-data:www-data /var/www/html
 
-CMD ["/start.sh"]
+# Enable mod_rewrite for Apache
+RUN a2enmod rewrite
+
+# Expose port 80
+EXPOSE 80
+
+# Start Apache server
+CMD ["apache2-foreground"]
