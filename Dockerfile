@@ -1,21 +1,14 @@
+# Use a newer version of the nginx-php-fpm image
 FROM richarvey/nginx-php-fpm:1.9.0
 
-COPY . .
-
-# Set working directory
+# Set the working directory
 WORKDIR /var/www/html
 
-# Install any PHP extensions needed
-RUN docker-php-ext-install pdo pdo_mysql
+# Copy your application files
+COPY . .
 
-# Set the appropriate permissions for the Apache server
-RUN chown -R www-data:www-data /var/www/html
+# Copy custom nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Enable mod_rewrite for Apache
-RUN a2enmod rewrite
-
-# Expose port 80
+# Expose the port
 EXPOSE 80
-
-# Start Apache server
-CMD ["apache2-foreground"]
