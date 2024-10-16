@@ -19,6 +19,7 @@ COPY . .
 
 # Install dependencies dengan Composer, ignore platform requirements jika ada
 RUN composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
+ENV WEBROOT /var/www/html/public
 
 # Copy konfigurasi Apache
 COPY codeigniter.conf /etc/apache2/sites-available/
