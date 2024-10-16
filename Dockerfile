@@ -27,10 +27,9 @@ COPY codeigniter.conf /etc/apache2/sites-available/
 
 # Aktifkan konfigurasi Apache dan nonaktifkan default
 RUN a2ensite codeigniter.conf \
-    && a2dissite 000-default.conf
-
-# Restart Apache untuk mengaktifkan semua perubahan
-RUN service apache2 reload
+    && a2dissite 000-default.conf \
+    && apache2ctl configtest \
+    && apache2ctl graceful
 
 EXPOSE 80
 CMD ["apache2-foreground"]
