@@ -1,5 +1,8 @@
 FROM php:8.1.0-apache
 
+chown -R www-data:www-data /var/www/html/app/public
+chmod -R 755 /var/www/html/app/public
+
 # Install dependencies
 RUN apt-get update \
     && apt-get install -y nano zip unzip git libicu-dev \
