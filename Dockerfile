@@ -15,9 +15,8 @@ WORKDIR /var/www/html
 COPY . /var/www/html
 
 RUN RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html \
-    && composer self-update
-
+    && chmod -R 755 /var/www/html 
+    
 # Copy konfigurasi Apache
 COPY codeigniter.conf /etc/apache2/sites-available/
 
