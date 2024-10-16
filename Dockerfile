@@ -9,27 +9,23 @@ RUN apt-get update \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
-# Enable mod_rewrite
-RUN a2enmod rewrite
-
-# Set working directory
 WORKDIR /var/www/html
 
-# Copy semua file aplikasi ke dalam container
+# Copy aplikasi CodeIgniter dari lokal ke container
 COPY . /var/www/html
 
-# Set hak akses untuk folder public dan lain-lain
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+RUN RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html \
+    && composer self-update
 
 # Copy konfigurasi Apache
 COPY codeigniter.conf /etc/apache2/sites-available/
 
-# Aktifkan konfigurasi Apache dan nonaktifkan default
+# Aktifkan site CodeIgniter dan reload Apache
 RUN a2ensite codeigniter.conf \
+    && service apache2 reload || true \
     && a2dissite 000-default.conf \
-    && apache2ctl configtest \
-    && apache2ctl graceful
+    && service apache2 reload || true
 
 EXPOSE 80
 CMD ["apache2-foreground"]
