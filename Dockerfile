@@ -14,9 +14,9 @@ WORKDIR /var/www/html
 # Copy aplikasi CodeIgniter dari lokal ke container
 COPY . /var/www/html
 
-RUN RUN chown -R www-data:www-data /var/www/html \
+RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html 
-    
+
 # Copy konfigurasi Apache
 COPY codeigniter.conf /etc/apache2/sites-available/
 
