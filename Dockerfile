@@ -21,7 +21,7 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
 
 # Setting ownership ke www-data (user Apache)
-RUN chown -R www-data:www-data /var/www/html
+# RUN chown -R www-data:www-data /var/www/html
 RUN chown -R www-data:www-data /var/www/html/app/public
 RUN chmod -R 755 /var/www/html/app/public
 
