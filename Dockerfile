@@ -12,13 +12,13 @@ RUN apt-get update \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 # Set working directory
-WORKDIR /var/www/html
+WORKDIR /var/www/html/public
 
 # Copy aplikasi CodeIgniter dari lokal ke container
 COPY . /var/www/html
 
 # Setting ownership ke www-data (user Apache)
-RUN chown -R www-data:www-data /var/www/html \
+RUN chown -R www-data:www-data /var/www/html/public \
     && composer install --no-dev --optimize-autoloader
 
 # Copy konfigurasi Apache
