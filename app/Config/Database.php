@@ -43,7 +43,6 @@ class Database extends Config
         'failover'     => [],
         'port'         => 17673,
         'numberNative' => false,
-        'options'  => [MYSQLI_CLIENT_SSL           => true]
     ];
 
     /**

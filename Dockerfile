@@ -12,7 +12,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 WORKDIR /var/www/html/public
 
 # Copy aplikasi CodeIgniter dari lokal ke container
-COPY . .
+COPY . /var/www/html/public
 
 RUN chown -R www-data:www-data /var/www/html/public \
     && composer self-update
@@ -20,11 +20,11 @@ RUN chown -R www-data:www-data /var/www/html/public \
 # Copy konfigurasi Apache
 COPY codeigniter.conf /etc/apache2/sites-available/
 
-# Aktifkan site CodeIgniter dan reload Apache
+# Mengaktifkan site CodeIgniter dan menonaktifkan default, lalu restart Apache
 RUN a2ensite codeigniter.conf \
-    && service apache2 reload || true \
     && a2dissite 000-default.conf \
-    && service apache2 reload || true
+    && apache2ctl configtest \
+    && apache2ctl graceful
 
 EXPOSE 80
 CMD ["apache2-foreground"]
