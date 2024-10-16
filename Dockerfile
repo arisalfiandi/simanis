@@ -1,6 +1,5 @@
 FROM php:8.1.0-apache
 
-# Install dependencies
 RUN apt-get update \
     && apt-get install -y nano zip unzip git libicu-dev \
     && docker-php-ext-configure intl \
@@ -8,29 +7,23 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
-# Set working directory
 WORKDIR /var/www/html
 
 # Copy aplikasi CodeIgniter dari lokal ke container
 COPY . .
 
-# Install dependencies dengan Composer, ignore platform requirements jika ada
-RUN composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
-ENV WEBROOT /var/www/html/public
+RUN chown -R www-data:www-data /var/www/html/public \
+    && composer self-update
 
-# Copy konfigurasi Apache
 COPY codeigniter.conf /etc/apache2/sites-available/
-
-# Aktifkan site CodeIgniter dan reload Apache
 RUN a2ensite codeigniter.conf \
-    && service apache2 reload || true \
+    && service apache2 reload || true
+
+RUN cd /etc/apache2/sites-available \
     && a2dissite 000-default.conf \
     && service apache2 reload || true
 
-# Expose port 80
 EXPOSE 80
-
 CMD ["apache2-foreground"]
