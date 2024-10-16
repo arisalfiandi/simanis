@@ -1,8 +1,5 @@
 FROM php:8.1.0-apache
 
-chown -R www-data:www-data /var/www/html/app/public
-chmod -R 755 /var/www/html/app/public
-
 # Install dependencies
 RUN apt-get update \
     && apt-get install -y nano zip unzip git libicu-dev \
@@ -18,7 +15,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 WORKDIR /var/www/html
 
 # Copy aplikasi CodeIgniter dari lokal ke container
-COPY . /var/www/html
+COPY . .
 
 # Install dependencies dengan Composer, ignore platform requirements jika ada
 RUN composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
