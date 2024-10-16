@@ -1,10 +1,10 @@
-FROM php:8.1.9-apache
+FROM php:8.0.20-apache
 
 #====================================================================#
 #                         SET VERSION LABEL                          #
 #====================================================================#
 ARG BUILD_DATE="June 17 2022"
-ARG PHP_VERSION="8.1"
+ARG PHP_VERSION="8.0"
 
 ENV BUILD_DATE="${BUILD_DATE}"
 ENV PHP_VERSION="${PHP_VERSION}"
