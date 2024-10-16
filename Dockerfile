@@ -17,8 +17,8 @@ WORKDIR /var/www/html
 # Copy aplikasi CodeIgniter dari lokal ke container
 COPY . /var/www/html
 
-# Install dependencies dari composer
-RUN composer install --no-dev --optimize-autoloader
+# Install dependencies dengan Composer, ignore platform requirements jika ada
+RUN composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
 
 # Setting ownership ke www-data (user Apache)
 RUN chown -R www-data:www-data /var/www/html
