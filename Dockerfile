@@ -9,7 +9,7 @@ RUN apt-get update \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
-WORKDIR /var/www/html
+WORKDIR /var/www/html/public
 
 # Copy aplikasi CodeIgniter dari lokal ke container
 COPY . .
