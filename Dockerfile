@@ -25,11 +25,12 @@ RUN chown -R www-data:www-data /var/www/html \
 # Copy konfigurasi Apache
 COPY codeigniter.conf /etc/apache2/sites-available/
 
-# Aktifkan site CodeIgniter dan reload Apache
+# Aktifkan konfigurasi Apache dan nonaktifkan default
 RUN a2ensite codeigniter.conf \
-    && service apache2 reload || true \
-    && a2dissite 000-default.conf \
-    && service apache2 reload || true
+    && a2dissite 000-default.conf
+
+# Restart Apache untuk mengaktifkan semua perubahan
+RUN service apache2 reload
 
 EXPOSE 80
 CMD ["apache2-foreground"]
