@@ -17,18 +17,15 @@ WORKDIR /var/www/html
 COPY . .
 
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html 
+    && composer self-update
 
-# Copy konfigurasi Apache
 COPY codeigniter.conf /etc/apache2/sites-available/
-
-# Aktifkan site CodeIgniter dan reload Apache
 RUN a2ensite codeigniter.conf \
-    && service apache2 reload || true \
-    && a2dissite 000-default.conf \
     && service apache2 reload || true
 
-RUN service apache2 restart
+RUN cd /etc/apache2/sites-available \
+    && a2dissite 000-default.conf \
+    && service apache2 reload || true
 
 EXPOSE 80
 CMD ["apache2-foreground"]
